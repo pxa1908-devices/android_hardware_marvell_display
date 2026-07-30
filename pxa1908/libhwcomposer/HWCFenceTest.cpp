@@ -31,7 +31,7 @@
 #include <sys/ioctl.h>
 #include <linux/android_pmem.h>
 #include <cutils/ashmem.h>
-#include <cutils/log.h>
+#include <log/log.h> // FIX: Changed from <cutils/log.h>
 
 #include "HWCFenceManager.h"
 

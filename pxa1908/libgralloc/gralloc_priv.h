@@ -27,7 +27,7 @@
 #include <unistd.h>
 
 #include <cutils/native_handle.h>
-#include <utils/Log.h>
+#include <log/log.h>
 
 #include <linux/fb.h>
 

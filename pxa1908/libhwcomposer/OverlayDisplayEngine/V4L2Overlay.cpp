@@ -42,7 +42,7 @@
 
 #define LOG_TAG "V4L2Overlay"
 
-#include <cutils/log.h>
+#include <log/log.h>
 #include <cutils/atomic.h>
 #include <cutils/properties.h>
 

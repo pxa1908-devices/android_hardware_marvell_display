@@ -17,6 +17,7 @@
 #include "gc_hwc_debug.h"
 
 #include <gc_gralloc_priv.h>
+#include <log/log.h>
 
 #if ENABLE_CLEAR_HOLE
 static inline gctBOOL
@@ -250,9 +251,8 @@ hwcPrepare(
         }
 
         /* Print a log indicating 3D composition is used. */
-        LOGI("hwc prepare: 3D composition");
+        ALOGI("hwc prepare: 3D composition");
     }
 
     return gcvSTATUS_OK;
 }
-

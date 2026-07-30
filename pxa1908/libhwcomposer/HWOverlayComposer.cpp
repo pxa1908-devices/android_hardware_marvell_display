@@ -16,7 +16,7 @@
  */
 
 #include <ui/Region.h>
-#include <utils/Log.h>
+#include <log/log.h> // FIX: Changed from <utils/Log.h>
 #include <system/graphics.h>
 #include <cutils/properties.h>
 #include "HWOverlayComposer.h"

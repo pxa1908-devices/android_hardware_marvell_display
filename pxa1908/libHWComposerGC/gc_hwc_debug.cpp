@@ -1,23 +1,12 @@
-/****************************************************************************
-*
-*    Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
-*
-*    The material in this file is confidential and contains trade secrets
-*    of Vivante Corporation. This is proprietary information owned by
-*    Vivante Corporation. No part of this work may be disclosed,
-*    reproduced, copied, transmitted, or used in any way for any purpose,
-*    without the express written permission of Vivante Corporation.
-*
-*****************************************************************************/
-
-
-
-
-
 #include "gc_hwc.h"
 #include "gc_hwc_debug.h"
 
 #include <sys/stat.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <log/log.h>
 
 static int
 _WriteBitmap(
@@ -70,7 +59,7 @@ hwcDumpLayer(
             break;
         }
 
-        LOGD("Layer[%d](%s): "
+        ALOGD("Layer[%zu](%s): "
              "flags=%d "
              "handle=%p "
              "transform=%d "
@@ -93,7 +82,7 @@ hwcDumpLayer(
 
         for (size_t j = 0; j < region->numRects; j++)
         {
-            LOGD(" Region[%d]: [%d,%d,%d,%d]",
+            ALOGD(" Region[%zu]: [%d,%d,%d,%d]",
                  j,
                  region->rects[j].left,
                  region->rects[j].top,
@@ -149,7 +138,7 @@ hwcDumpArea(
             }
         }
 
-        LOGD("%s", buf);
+        ALOGD("%s", buf);
 
         /* Advance to next area. */
         area = area->next;
@@ -205,7 +194,7 @@ hwcDumpBitmap(
                  Layers[i].width,
                  Layers[i].height);
 
-        LOGD("Writing %s ...", fname);
+        ALOGD("Writing %s ...", fname);
 
         /* Write surface to bitmap. */
         _WriteBitmap(fname,
@@ -248,17 +237,17 @@ enum
 };
 #endif
 
-#   include <stdint.h>
+#include <stdint.h>
 typedef uint8_t         BYTE;
 typedef uint32_t        BOOL;
 typedef uint32_t        DWORD;
 typedef uint16_t        WORD;
 typedef uint32_t        LONG;
 
-#   define BI_RGB           0L
-#   define BI_RLE8          1L
-#   define BI_RLE4          2L
-#   define BI_BITFIELDS     3L
+#define BI_RGB           0L
+#define BI_RLE8          1L
+#define BI_RLE4          2L
+#define BI_BITFIELDS     3L
 
 typedef struct tagBITMAPINFOHEADER
 {
@@ -285,12 +274,6 @@ typedef struct tagBITMAPFILEHEADER
         DWORD   bfOffBits;
 }
 __attribute__((packed)) BITMAPFILEHEADER;
-
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
 
 
 static int _big_endian = -1;
@@ -345,7 +328,7 @@ static int _fconv(
     /* Check source input. */
     if (source == NULL)
     {
-        LOGE("Null source input");
+        ALOGE("Null source input");
         return -EINVAL;
     }
 
@@ -366,14 +349,14 @@ static int _fconv(
         break;
 
     default:
-        LOGE("Invalid source format");
+        ALOGE("Invalid source format");
         return -EINVAL;
     }
 
     /* Check dest input. */
     if (dest == NULL)
     {
-        LOGE("Null dest input");
+        ALOGE("Null dest input");
         return -EINVAL;
     }
 
@@ -394,7 +377,7 @@ static int _fconv(
         break;
 
     default:
-        LOGE("Invalid dest format");
+        ALOGE("Invalid dest format");
         return -EINVAL;
     }
 
@@ -591,21 +574,21 @@ int _WriteBitmap(
     /* Check filename. */
     if (filename == NULL)
     {
-        LOGE("filename is NULL.");
+        ALOGE("filename is NULL.");
         return -EINVAL;
     }
 
     /* Check data. */
     if (data == NULL)
     {
-        LOGE("Pixels data is empty.");
+        ALOGE("Pixels data is empty.");
         return -EINVAL;
     }
 
     /* Check width and height. */
     if (width == 0 || height == 0)
     {
-        LOGE("Width: %d, Height: %d", width, height);
+        ALOGE("Width: %d, Height: %d", width, height);
         return -EINVAL;
     }
 
@@ -631,7 +614,7 @@ int _WriteBitmap(
         break;
 
     default:
-        LOGE("Invalid format: %d", format);
+        ALOGE("Invalid format: %d", format);
         return -EINVAL;
     }
 
@@ -645,7 +628,7 @@ int _WriteBitmap(
     /* Source has stride. */
     if (stride < width * bypp)
     {
-        LOGE("Invalid stride: %d", stride);
+        ALOGE("Invalid stride: %d", stride);
         return -EINVAL;
     }
 
@@ -694,7 +677,7 @@ int _WriteBitmap(
     fp = fopen(filename, "wb");
     if (fp == NULL)
     {
-        LOGE("Can not open %s for write.", filename);
+        ALOGE("Can not open %s for write.", filename);
         return -EACCES;
     }
 
@@ -702,7 +685,8 @@ int _WriteBitmap(
     if (fwrite(&file_header, 1, sizeof (BITMAPFILEHEADER), fp)
         != sizeof (BITMAPFILEHEADER))
     {
-        LOGE("Can not write file header.");
+        ALOGE("Can not write file header.");
+        fclose(fp);
         return -EACCES;
     }
 
@@ -710,7 +694,8 @@ int _WriteBitmap(
     if (fwrite(&info_header, 1, sizeof (BITMAPINFOHEADER), fp)
         != sizeof (BITMAPINFOHEADER))
     {
-        LOGE("Can not write info header.");
+        ALOGE("Can not write info header.");
+        fclose(fp);
         return -EACCES;
     }
 
@@ -719,7 +704,8 @@ int _WriteBitmap(
 
     if (buff == NULL)
     {
-        LOGE("Out of memory.");
+        ALOGE("Out of memory.");
+        fclose(fp);
         return -ENOMEM;
     }
 
@@ -781,8 +767,8 @@ int _WriteBitmap(
         /* Write a line. */
         if (fwrite(buff, 1, dstride, fp) != dstride)
         {
-            LOGE("Error: Can not write file");
-            LOGE("Bitmap is incomplete.");
+            ALOGE("Error: Can not write file");
+            ALOGE("Bitmap is incomplete.");
 
             /* Difficult to recover. */
             free(buff);
@@ -803,4 +789,3 @@ int _WriteBitmap(
 
     return 0;
 }
-

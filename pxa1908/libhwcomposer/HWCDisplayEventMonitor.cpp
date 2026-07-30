@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <utils/Log.h>
+#include <log/log.h> // FIX: Changed from <utils/Log.h>
 #include <sys/poll.h>
 #include <hardware_legacy/uevent.h>
 #include "HWCDisplayEventMonitor.h"

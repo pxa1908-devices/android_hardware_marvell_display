@@ -21,7 +21,7 @@
     #include "HWCGCInterface.h"
 #endif
 #include <cutils/properties.h>
-#include <cutils/log.h>
+#include <log/log.h>
 
 using namespace android;
 

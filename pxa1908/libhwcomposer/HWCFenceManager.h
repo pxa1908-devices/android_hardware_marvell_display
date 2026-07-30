@@ -22,8 +22,8 @@
 #include <fcntl.h>
 #include <errno.h>
 
-#include <cutils/log.h>
-#include <cutils/atomic.h>
+#include <log/log.h> // FIX: Changed from <cutils/log.h>
+// FIX: Removed <cutils/atomic.h>
 
 #include <utils/Mutex.h>
 #include <utils/Thread.h>

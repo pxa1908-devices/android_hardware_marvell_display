@@ -37,7 +37,7 @@
 #include <linux/videodev2.h>
 #include <cutils/ashmem.h>
 
-#include <cutils/log.h>
+#include <log/log.h>
 #include <cutils/atomic.h>
 #include <cutils/properties.h>
 

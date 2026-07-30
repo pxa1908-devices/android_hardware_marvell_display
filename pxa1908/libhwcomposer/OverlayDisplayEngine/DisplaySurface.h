@@ -30,7 +30,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <utils/Errors.h>
-#include <utils/Log.h>
+#include <log/log.h>
 #include <binder/IMemory.h>
 
 #ifdef __cplusplus

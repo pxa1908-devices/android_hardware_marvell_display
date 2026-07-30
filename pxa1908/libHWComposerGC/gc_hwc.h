@@ -1,21 +1,5 @@
-/****************************************************************************
-*
-*    Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
-*
-*    The material in this file is confidential and contains trade secrets
-*    of Vivante Corporation. This is proprietary information owned by
-*    Vivante Corporation. No part of this work may be disclosed,
-*    reproduced, copied, transmitted, or used in any way for any purpose,
-*    without the express written permission of Vivante Corporation.
-*
-*****************************************************************************/
-
-
-
-
 #ifndef __gc_hwc_h_
 #define __gc_hwc_h_
-
 
 /*******************************************************************************
 ** Build options.
@@ -46,9 +30,9 @@
 #define ENABLE_CLEAR_HOLE     0
 
 /*
-    CLEAR_FB_FOR_OVERAY
+    CLEAR_FB_FOR_OVERLAY
 
-        Enable it to clear overlay area to transparet in framebuffer memory.
+        Enable it to clear overlay area to transparent in framebuffer memory.
         It is done with glClear for 3D composition (SurfaceFlinger.cpp),
         and with a 2D clear for hwcomposer (gc_hwc_set.cpp).
 */
@@ -60,8 +44,11 @@
 #include <stdlib.h>
 
 #include <hardware/hwcomposer.h>
-#include <ui/android_native_buffer.h>
-#include <cutils/log.h>
+
+/* Android 8.0+ Replacements for legacy buffer and logging headers */
+#include <system/window.h>
+#include <cutils/native_handle.h>
+#include <log/log.h>
 
 #include <gc_hal_base.h>
 #include <gc_hal_raster.h>
@@ -373,7 +360,7 @@ hwcPrepare(
 gceSTATUS
 hwcSet(
     IN hwcContext * Context,
-    IN android_native_buffer_t * BackBuffer,
+    IN ANativeWindowBuffer * BackBuffer,
     IN hwc_layer_list_t * List
     );
 
@@ -396,4 +383,3 @@ hwcOverlay(
 #endif
 
 #endif /* __gc_hwc_h_ */
-

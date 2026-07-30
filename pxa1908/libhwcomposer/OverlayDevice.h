@@ -27,7 +27,7 @@
 
 #include <ui/Rect.h>
 #include <utils/RefBase.h>
-#include <utils/Log.h>
+#include <log/log.h> // FIX: Changed from <utils/Log.h>
 #include <utils/SortedVector.h>
 #include <hardware/hardware.h>
 #include <hardware/hwcomposer.h>

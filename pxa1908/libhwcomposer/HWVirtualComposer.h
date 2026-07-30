@@ -20,7 +20,7 @@
 
 #include <linux/fb.h>
 #include <utils/RefBase.h>
-#include <utils/Log.h>
+#include <log/log.h> // FIX: Changed from <utils/Log.h>
 #include <hardware/hardware.h>
 #include <hardware/hwcomposer.h>
 #include "GcuEngine.h"

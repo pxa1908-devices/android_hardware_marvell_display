@@ -20,7 +20,7 @@
 #include <dlfcn.h>
 
 #include <cutils/ashmem.h>
-#include <cutils/log.h>
+#include <log/log.h> // FIX: Changed from <cutils/log.h>
 
 #include <hardware/hardware.h>
 #include <hardware/gralloc.h>
@@ -31,8 +31,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include <cutils/log.h>
-#include <cutils/atomic.h>
 #include <cutils/properties.h>
 
 #include <linux/fb.h>
@@ -109,7 +107,8 @@ formatTable[] =
     {HAL_PIXEL_FORMAT_BGRA_8888, 32, 16, 8,  8, 8,   0, 8, 24, 8}
 };
 
-extern int format = 0;
+// FIX: Removed 'extern' keyword to satisfy strict compilation rules
+int format = 0;
 
 #if MRVL_SUPPORT_DISPLAY_MODEL
 android::sp<android::IDisplayModel> displayModel = NULL;

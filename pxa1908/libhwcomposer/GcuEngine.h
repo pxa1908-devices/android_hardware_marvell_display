@@ -24,6 +24,7 @@
 #include <utils/SortedVector.h>
 #include <utils/String8.h>
 #include <utils/Mutex.h>
+#include <log/log.h> // FIX: Added missing logging header for ALOGD/ALOGE
 #include "gcu.h"
 
 namespace android{

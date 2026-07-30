@@ -36,7 +36,7 @@
 #include <utils/Errors.h>
 #include <utils/threads.h>
 #include <utils/CallStack.h>
-#include <utils/Log.h>
+#include <log/log.h>
 #include <binder/IPCThreadState.h>
 #include <binder/IMemory.h>
 #include <ui/DisplayInfo.h>

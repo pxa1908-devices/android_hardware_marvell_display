@@ -26,7 +26,7 @@
 #include <stdlib.h>
 #include <sys/ioctl.h>
 #include <errno.h>
-#include <cutils/log.h>
+#include <log/log.h>
 #include <cutils/properties.h>
 #include <utils/Singleton.h>
 #include <utils/Errors.h>
