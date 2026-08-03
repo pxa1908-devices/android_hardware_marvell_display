@@ -83,6 +83,7 @@ LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/hw
 LOCAL_SHARED_LIBRARIES := $(common_libs) \
         libgcu \
         libui \
+        liblog \
         libEGL \
         libhardware_legacy
 
